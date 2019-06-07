@@ -27,4 +27,4 @@
       changed_when: false
 
   roles:
-    - role: Ubuntu1804-CIS
+    - role: Debian9-CIS
