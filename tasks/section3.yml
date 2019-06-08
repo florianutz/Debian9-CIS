@@ -6,7 +6,7 @@
       state: present
       reload: true
       ignoreerrors: true
-  when: not ubuntu1804cis_is_router
+  when: not debian9cis_is_router
   notify:
       - sysctl flush ipv4 route table
   tags:
@@ -27,7 +27,7 @@
   with_items:
       - { name: net.ipv4.conf.all.send_redirects, value: 0 }
       - { name: net.ipv4.conf.default.send_redirects, value: 0 }
-  when: not ubuntu1804cis_is_router
+  when: not debian9cis_is_router
   notify:
       - sysctl flush ipv4 route table
   tags:
@@ -196,7 +196,7 @@
   with_items:
       - { name: net.ipv6.conf.all.accept_ra, value: 0 }
       - { name: net.ipv6.conf.default.accept_ra, value: 0 }
-  when: ubuntu1804cis_ipv6_required
+  when: debian9cis_ipv6_required
   notify:
       - sysctl flush ipv6 route table
   tags:
@@ -217,7 +217,7 @@
   with_items:
       - { name: net.ipv6.conf.all.accept_redirects, value: 0 }
       - { name: net.ipv6.conf.default.accept_redirects, value: 0 }
-  when: ubuntu1804cis_ipv6_required
+  when: debian9cis_ipv6_required
   notify:
       - sysctl flush ipv6 route table
   tags:
@@ -233,7 +233,7 @@
       regexp: "^(#)?options ipv6 disable="
       line: "options ipv6 disable=1"
       create: true
-  when: not ubuntu1804cis_ipv6_required
+  when: not debian9cis_ipv6_required
   tags:
       - level1
       - notscored
@@ -353,8 +353,8 @@
       state: present
       install_recommends: false
   when:
-      - ubuntu1804cis_firewall == "firewalld"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "firewalld"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -367,8 +367,8 @@
       state: started
       enabled: true
   when:
-      - ubuntu1804cis_firewall == "firewalld"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "firewalld"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -381,8 +381,8 @@
       state: present
       install_recommends: false
   when:
-      - ubuntu1804cis_firewall == "iptables"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "iptables"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -395,8 +395,8 @@
       state: started
       enabled: true
   when:
-      - ubuntu1804cis_firewall == "iptables"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "iptables"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -409,8 +409,8 @@
       regexp: "^DefaultZone"
       line: "DefaultZone=drop"
   when:
-      - ubuntu1804cis_firewall == "firewalld"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "firewalld"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -423,8 +423,8 @@
       zone: drop
       permanent: true
   when:
-      - ubuntu1804cis_firewall == "firewalld"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "firewalld"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -435,8 +435,8 @@
   command: /bin/true
   changed_when: false
   when:
-      - ubuntu1804cis_firewall == "iptables"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "iptables"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -448,8 +448,8 @@
   command: /bin/true
   changed_when: false
   when:
-      - ubuntu1804cis_firewall == "iptables"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "iptables"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored
@@ -461,8 +461,8 @@
   command: /bin/true
   changed_when: false
   when:
-      - ubuntu1804cis_firewall == "iptables"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "iptables"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - notscored
@@ -478,10 +478,10 @@
       permanent: true
       immediate: true
   when:
-      - ubuntu1804cis_firewall == "firewalld"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "firewalld"
+      - debian9cis_setup_firewall
   notify: restart firewalld
-  with_items: "{{ ubuntu1804cis_firewall_services }}"
+  with_items: "{{ debian9cis_firewall_services }}"
   tags:
       - level1
       - scored
@@ -492,8 +492,8 @@
   command: /bin/true
   changed_when: false
   when:
-      - ubuntu1804cis_firewall == "iptables"
-      - ubuntu1804cis_setup_firewall
+      - debian9cis_firewall == "iptables"
+      - debian9cis_setup_firewall
   tags:
       - level1
       - scored

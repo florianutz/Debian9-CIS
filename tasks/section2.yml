@@ -27,7 +27,7 @@
         when:
             - chargen_stream_service.stat.exists
   when:
-      - ubuntu1804cis_rule_2_1_1
+      - debian9cis_rule_2_1_1
   tags:
       - level1
       - scored
@@ -64,7 +64,7 @@
         when:
             - daytime_stream_service.stat.exists
   when:
-      - ubuntu1804cis_rule_2_1_2
+      - debian9cis_rule_2_1_2
   tags:
       - level1
       - scored
@@ -100,7 +100,7 @@
         when:
             - discard_stream_service.stat.exists
   when:
-      - ubuntu1804cis_rule_2_1_3
+      - debian9cis_rule_2_1_3
   tags:
       - level1
       - scored
@@ -136,7 +136,7 @@
         when:
             - echo_stream_service.stat.exists
   when:
-      - ubuntu1804cis_rule_2_1_4
+      - debian9cis_rule_2_1_4
   tags:
       - level1
       - scored
@@ -172,7 +172,7 @@
         when:
             - time_stream_service.stat.exists
   when:
-      - ubuntu1804cis_rule_2_1_5
+      - debian9cis_rule_2_1_5
   tags:
       - level1
       - scored
@@ -188,9 +188,9 @@
           state: stopped
           enabled: false
         when:
-          - not ubuntu1804cis_rsh_server
+          - not debian9cis_rsh_server
           - rsh_service_status.stdout == "loaded"
-          - ubuntu1804cis_rule_2_1_6
+          - debian9cis_rule_2_1_6
 
       - name: "SCORED | 2.1.6 | PATCH | Ensure rsh server is not enabled | rlogin"
         service:
@@ -198,9 +198,9 @@
           state: stopped
           enabled: false
         when:
-          - not ubuntu1804cis_rsh_server
+          - not debian9cis_rsh_server
           - rlogin_service_status.stdout == "loaded"
-          - ubuntu1804cis_rule_2_1_6
+          - debian9cis_rule_2_1_6
 
       - name: "SCORED | 2.1.6 | PATCH | Ensure rsh server is not enabled | rexec"
         service:
@@ -208,9 +208,9 @@
           state: stopped
           enabled: false
         when:
-          - not ubuntu1804cis_rsh_server
+          - not debian9cis_rsh_server
           - rexec_service_status.stdout == "loaded"
-          - ubuntu1804cis_rule_2_1_6
+          - debian9cis_rule_2_1_6
   tags:
     - level1
     - scored
@@ -223,9 +223,9 @@
     state: stopped
     enabled: false
   when:
-    - not ubuntu1804cis_ntalk_server
+    - not debian9cis_ntalk_server
     - ntalk_service_status.stdout == "loaded"
-    - ubuntu1804cis_rule_2_1_7
+    - debian9cis_rule_2_1_7
   tags:
     - level1
     - scored
@@ -238,9 +238,9 @@
     state: stopped
     enabled: false
   when:
-    - not ubuntu1804cis_telnet_server
+    - not debian9cis_telnet_server
     - telnet_service_status.stdout == "loaded"
-    - ubuntu1804cis_rule_2_1_8
+    - debian9cis_rule_2_1_8
   tags:
     - level1
     - scored
@@ -262,11 +262,11 @@
         notify: restart xinetd
         when:
             - tftp_service.stat.exists
-            - not ubuntu1804cis_tftp_server
+            - not debian9cis_tftp_server
         tags:
             - skip_ansible_lint
   when:
-      - ubuntu1804cis_rule_2_1_9
+      - debian9cis_rule_2_1_9
   tags:
       - level1
       - scored
@@ -280,8 +280,8 @@
       enabled: false
   when:
       - xinetd_service_status.stdout == "loaded"
-      - not ubuntu1804cis_xinetd_required
-      - ubuntu1804cis_rule_2_1_10
+      - not debian9cis_xinetd_required
+      - debian9cis_rule_2_1_10
   tags:
       - level1
       - patch
@@ -294,7 +294,7 @@
     state: absent
   when:
     - openbsd_inetd_service_status.stdout == "ok installed"
-    - ubuntu1804cis_rule_2_1_11
+    - debian9cis_rule_2_1_11
   tags:
     - level1
     - patch
@@ -305,13 +305,13 @@
   block:
       - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service install"
         apt:
-            name: "{{ ubuntu1804cis_time_synchronization }}"
+            name: "{{ debian9cis_time_synchronization }}"
             state: present
             install_recommends: false
 
       - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service start"
         service:
-            name: "{{ ubuntu1804cis_time_synchronization }}"
+            name: "{{ debian9cis_time_synchronization }}"
             state: started
             enabled: true
 
@@ -321,7 +321,7 @@
             state: stopped
             enabled: false
         when:
-            - ubuntu1804cis_time_synchronization == "chrony"
+            - debian9cis_time_synchronization == "chrony"
             - ntpd_service_status.stdout == "loaded"
 
       - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service stop chrony"
@@ -331,11 +331,11 @@
             enabled: false
         ignore_errors: true
         when:
-            - ubuntu1804cis_time_synchronization == "ntp"
+            - debian9cis_time_synchronization == "ntp"
             - chronyd_service_status.stdout == "loaded"
 
   when:
-      - ubuntu1804cis_rule_2_2_1_1
+      - debian9cis_rule_2_2_1_1
   tags:
       - level1
       - notscored
@@ -359,8 +359,8 @@
             regexp: "^RUNASUSER"
             line: "RUNASUSER=ntp"
   when:
-      - ubuntu1804cis_time_synchronization == "ntp"
-      - ubuntu1804cis_rule_2_2_1_2
+      - debian9cis_time_synchronization == "ntp"
+      - debian9cis_rule_2_2_1_2
   tags:
       - level1
       - scored
@@ -376,8 +376,8 @@
       group: root
       mode: 0644
   when:
-      - ubuntu1804cis_time_synchronization == "chrony"
-      - ubuntu1804cis_rule_2_2_1_3
+      - debian9cis_time_synchronization == "chrony"
+      - debian9cis_rule_2_2_1_3
   tags:
       - level1
       - scored
@@ -394,8 +394,8 @@
       state: present
       create: true
   when:
-      - ubuntu1804cis_time_synchronization == "chrony"
-      - ubuntu1804cis_rule_2_2_1_3
+      - debian9cis_time_synchronization == "chrony"
+      - debian9cis_rule_2_2_1_3
   tags:
       - level1
       - scored
@@ -411,8 +411,8 @@
         - "x11*"
       state: absent
   when:
-      - not ubuntu1804cis_xwindows_required
-      - ubuntu1804cis_rule_2_2_2
+      - not debian9cis_xwindows_required
+      - debian9cis_rule_2_2_2
   tags:
       - level1
       - scored
@@ -426,9 +426,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_avahi_server
+      - not debian9cis_avahi_server
       - avahi_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_3
+      - debian9cis_rule_2_2_3
   tags:
       - level1
       - scored
@@ -443,9 +443,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_cups_server
+      - not debian9cis_cups_server
       - cups_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_4
+      - debian9cis_rule_2_2_4
   tags:
       - level1
       - scored
@@ -460,9 +460,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_dhcp_server
+      - not debian9cis_dhcp_server
       - dhcpd_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_5
+      - debian9cis_rule_2_2_5
   tags:
       - level1
       - scored
@@ -477,9 +477,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_ldap_server
+      - not debian9cis_ldap_server
       - slapd_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_6
+      - debian9cis_rule_2_2_6
   tags:
       - level1
       - scored
@@ -494,9 +494,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_nfs_rpc_server
+      - not debian9cis_nfs_rpc_server
       - nfs_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_7
+      - debian9cis_rule_2_2_7
   tags:
       - level1
       - scored
@@ -512,9 +512,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_nfs_rpc_server
+      - not debian9cis_nfs_rpc_server
       - rpcbind_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_7
+      - debian9cis_rule_2_2_7
   tags:
       - level1
       - scored
@@ -530,9 +530,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_named_server
+      - not debian9cis_named_server
       - named_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_8
+      - debian9cis_rule_2_2_8
   tags:
       - level1
       - scored
@@ -545,9 +545,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_vsftpd_server
+      - not debian9cis_vsftpd_server
       - vsftpd_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_9
+      - debian9cis_rule_2_2_9
   tags:
       - level1
       - scored
@@ -560,9 +560,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_httpd_server
+      - not debian9cis_httpd_server
       - httpd_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_10
+      - debian9cis_rule_2_2_10
   tags:
       - level1
       - scored
@@ -575,9 +575,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_dovecot_server
+      - not debian9cis_dovecot_server
       - dovecot_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_11
+      - debian9cis_rule_2_2_11
   tags:
       - level1
       - scored
@@ -590,9 +590,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_smb_server
+      - not debian9cis_smb_server
       - smb_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_12
+      - debian9cis_rule_2_2_12
   tags:
       - level1
       - scored
@@ -605,9 +605,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_squid_server
+      - not debian9cis_squid_server
       - squid_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_13
+      - debian9cis_rule_2_2_13
   tags:
       - level1
       - scored
@@ -620,9 +620,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_snmp_server
+      - not debian9cis_snmp_server
       - snmpd_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_14
+      - debian9cis_rule_2_2_14
   tags:
       - level1
       - scored
@@ -635,9 +635,9 @@
       regexp: "^(#)?inet_interfaces"
       line: "inet_interfaces = localhost"
   when:
-      - not ubuntu1804cis_is_mail_server
+      - not debian9cis_is_mail_server
       - postfix_installed.rc == 0
-      - ubuntu1804cis_rule_2_2_15
+      - debian9cis_rule_2_2_15
   tags:
       - level1
       - scored
@@ -650,9 +650,9 @@
     state: stopped
     enabled: false
   when:
-    - not ubuntu1804cis_rsyncd_server
+    - not debian9cis_rsyncd_server
     - rsyncd_service_status.stdout == "loaded"
-    - ubuntu1804cis_rule_2_2_16
+    - debian9cis_rule_2_2_16
   tags:
     - level1
     - scored
@@ -665,9 +665,9 @@
       state: stopped
       enabled: false
   when:
-      - not ubuntu1804cis_nis_server
+      - not debian9cis_nis_server
       - ypserv_service_status.stdout == "loaded"
-      - ubuntu1804cis_rule_2_2_17
+      - debian9cis_rule_2_2_17
   tags:
       - level1
       - scored
@@ -679,8 +679,8 @@
       name: ypbind
       state: absent
   when:
-      - not ubuntu1804cis_ypbind_required
-      - ubuntu1804cis_rule_2_3_1
+      - not debian9cis_ypbind_required
+      - debian9cis_rule_2_3_1
   tags:
       - level1
       - scored
@@ -692,8 +692,8 @@
       name: rsh
       state: absent
   when:
-      - not ubuntu1804cis_rsh_required
-      - ubuntu1804cis_rule_2_3_2
+      - not debian9cis_rsh_required
+      - debian9cis_rule_2_3_2
   tags:
       - level1
       - scored
@@ -705,8 +705,8 @@
       name: talk
       state: absent
   when:
-      - not ubuntu1804cis_talk_required
-      - ubuntu1804cis_rule_2_3_3
+      - not debian9cis_talk_required
+      - debian9cis_rule_2_3_3
   tags:
       - level1
       - scored
@@ -718,8 +718,8 @@
       name: telnet
       state: absent
   when:
-      - not ubuntu1804cis_telnet_required
-      - ubuntu1804cis_rule_2_3_4
+      - not debian9cis_telnet_required
+      - debian9cis_rule_2_3_4
   tags:
       - level1
       - scored
@@ -731,8 +731,8 @@
       name: openldap-clients
       state: absent
   when:
-      - not ubuntu1804cis_openldap_clients_required
-      - ubuntu1804cis_rule_2_3_5
+      - not debian9cis_openldap_clients_required
+      - debian9cis_rule_2_3_5
   tags:
       - level1
       - scored

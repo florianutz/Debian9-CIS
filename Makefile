@@ -1,4 +1,4 @@
-# Makefile for Ubuntu1804-CIS
+# Makefile for Debian9-CIS
 .PHONY: help
 help:
 	@echo

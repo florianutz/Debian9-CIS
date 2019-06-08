@@ -2,8 +2,8 @@
 - name: Converge
   hosts: all
   vars:
-    ubuntu1804cis_skip_for_travis: true
-    ubuntu1804cis_selinux_disable: true
+    debian9cis_skip_for_travis: true
+    debian9cis_selinux_disable: true
   pre_tasks:
     - name: install packages for testing under docker
       apt:
