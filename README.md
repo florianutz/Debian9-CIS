@@ -22,7 +22,7 @@ With this in the file requirements.yml:
 
 Based on [CIS Debian Benchmark v1.0.0 - 21-12-2018 ](https://community.cisecurity.org/collab/public/index.php).
 
-This repo originated from work done by [MindPointGroup](https://github.com/MindPointGroup/RHEL7-CIS)
+This repository is a migration from Ubuntu 18.04 [Ubuntu1804-CIS](https://github.com/florianutz/Ubuntu1804-CIS). Currently not all tasks have the right number and naming for the official Debian benchmark. 
 
 Requirements
 ------------
