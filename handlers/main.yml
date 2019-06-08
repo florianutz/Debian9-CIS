@@ -7,7 +7,9 @@
       name: net.ipv4.route.flush
       value: 1
       sysctl_set: true
-  when: ansible_virtualization_type != "docker"
+  when:
+    - ansible_virtualization_type != "docker"
+    - not debian9cis_chroot
 
 - name: sysctl flush ipv6 route table
   become: true
@@ -15,7 +17,9 @@
       name: net.ipv6.route.flush
       value: 1
       sysctl_set: true
-  when: ansible_virtualization_type != "docker"
+  when:
+    - ansible_virtualization_type != "docker"
+    - not debian9cis_chroot
 
 - name: systemd restart tmp.mount
   become: true
@@ -25,7 +29,9 @@
       enabled: true
       masked: false
       state: reloaded
-  when: ansible_virtualization_type != "docker"
+  when:
+    - ansible_virtualization_type != "docker"
+    - not debian9cis_chroot
   ignore_errors: "{{ debian9cis_ignore_remount_errors }}"
 
 - name: systemd restart var-tmp.mount
@@ -36,6 +42,8 @@
       enabled: true
       masked: false
       state: reloaded
+  when:
+    - not debian9cis_chroot
   ignore_errors: "{{ debian9cis_ignore_remount_errors }}"
 
 - name: generate new grub config
@@ -47,22 +55,30 @@
   service:
       name: firewalld
       state: restarted
+  when:
+    - not debian9cis_chroot
 
 - name: restart xinetd
   become: true
   service:
       name: xinetd
       state: restarted
+  when:
+    - not debian9cis_chroot
 
 - name: restart sshd
   become: true
   service:
       name: sshd
       state: restarted
+  when:
+    - not debian9cis_chroot
 
 - name: reload dconf
   become: true
   command: dconf update
+  when:
+    - not debian9cis_chroot
 
 - name: restart auditd
   become: true
@@ -71,6 +87,7 @@
       state: restarted
   when:
       - not debian9cis_skip_for_travis
+      - not debian9cis_chroot
   tags:
       - skip_ansible_lint
 
@@ -79,5 +96,6 @@
   command: /sbin/augenrules --load
   when:
       - not debian9cis_skip_for_travis
+      - not debian9cis_chroot
   tags:
       - skip_ansible_lint

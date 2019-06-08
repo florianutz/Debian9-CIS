@@ -2,6 +2,12 @@
 # defaults file for Debian9-CIS
 debian9cis_skip_for_travis: false
 
+# if you want to use it on a Raspbian set to true
+debian9cis_raspbian: false
+
+# if you want to use it with a chroot connector (eg for image building) set to true
+debian9cis_chroot: false
+
 debian9cis_notauto: false
 debian9cis_section1: true
 debian9cis_section2: true
