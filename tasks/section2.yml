@@ -314,6 +314,8 @@
             name: "{{ debian9cis_time_synchronization }}"
             state: started
             enabled: true
+        when:
+          - not debian9cis_chroot
 
       - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service stop ntp"
         service:
@@ -323,6 +325,7 @@
         when:
             - debian9cis_time_synchronization == "chrony"
             - ntpd_service_status.stdout == "loaded"
+            - not debian9cis_chroot
 
       - name: "NOTSCORED | 2.2.1.1 | PATCH | Ensure time synchronization is in use - service stop chrony"
         service:
@@ -333,6 +336,7 @@
         when:
             - debian9cis_time_synchronization == "ntp"
             - chronyd_service_status.stdout == "loaded"
+            - not debian9cis_chroot
 
   when:
       - debian9cis_rule_2_2_1_1
