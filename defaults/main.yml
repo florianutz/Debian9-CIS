@@ -46,6 +46,7 @@ debian9cis_rule_1_1_18: true
 debian9cis_rule_1_1_19: true
 debian9cis_rule_1_1_20: true
 debian9cis_rule_1_1_21: true
+debian9cis_rule_1_1_22: true
 debian9cis_rule_1_2_1: true
 debian9cis_rule_1_2_2: true
 debian9cis_rule_1_3_1: true
