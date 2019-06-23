@@ -194,6 +194,7 @@
   when:
       - debian9cis_rule_1_1_2
       - not debian9cis_skip_for_travis
+      - not debian9cis_chroot
   tags:
       - level2
       - scored
@@ -327,6 +328,7 @@
       opts: "nodev"
   when:
       - debian9cis_rule_1_1_14
+      - not debian9cis_chroot
       - item.mount == "/home"
   with_items:
       - "{{ ansible_mounts }}"
@@ -530,6 +532,7 @@
   when:
       - ansible_os_family == "Debian"
       - debian9cis_rule_1_4_1
+      - not debian9cis_raspbian
   tags:
       - level1
       - scored
@@ -544,6 +547,7 @@
   when:
       - debian9cis_set_boot_pass
       - debian9cis_rule_1_4_2
+      - not debian9cis_raspbian
   tags:
       - level1
       - scored
@@ -607,6 +611,7 @@
   when:
       - debian9cis_rule_1_5_2
       - not debian9cis_skip_for_travis
+      - not debian9cis_chroot
   tags:
       - level1
       - notscored
