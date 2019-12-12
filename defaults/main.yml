@@ -445,3 +445,6 @@ chrony_config_file:
 
 ### Firewall
 debian9cis_setup_firewall: false
+
+# Offline machine
+debian9cis_offline: false
