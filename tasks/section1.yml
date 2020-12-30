@@ -865,6 +865,8 @@
 - name: "NOTSCORED | 1.8 | PATCH | Ensure updates, patches, and additional security software are installed"
   apt:
       upgrade: dist
+  when:
+      - debian9cis_rule_1_8
   tags:
       - level1
       - notscored
