@@ -362,6 +362,7 @@ debian9cis_warning_banner: |
 # End Banner
 
 ## Section 4 Vars
+debian9cis_install_auditd: true
 debian9cis_auditd:
   admin_space_left_action: halt
   max_log_file_action: keep_logs
