@@ -35,6 +35,8 @@
     name: "{{ auditd_package[ansible_os_family] }}"
     state: present
     install_recommends: false
+  when:
+    - debian9cis_install_auditd
 
 - name: "PRELIM | Section 5.1 | Configure cron"
   apt:
