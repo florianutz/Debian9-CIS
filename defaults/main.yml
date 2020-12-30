@@ -78,6 +78,7 @@ debian9cis_rule_1_7_1_4: true
 debian9cis_rule_1_7_1_5: true
 debian9cis_rule_1_7_1_6: true
 debian9cis_rule_1_7_2: true
+debian9cis_rule_1_8: true
 
 # Section 2 rules
 debian9cis_rule_2_1_1: true
