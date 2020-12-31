@@ -251,18 +251,6 @@
       - rule_6.2.5
 
 - name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
-  command: /bin/true
-  changed_when: false
-  when:
-      - debian9cis_rule_6_2_6
-  tags:
-      - level1
-      - scored
-      - patch
-      - rule_6.2.6
-      - notimplemented
-
-- name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
   shell: |
     set -o pipefail
     sudopath=($(grep secure_path /etc/sudoers | cut -f2 -d= |cut -f2 -d\"))
@@ -280,6 +268,7 @@
   changed_when: false
   check_mode: false
   when:
+      - "'sudo' in ansible_facts.packages"
       - debian9cis_rule_6_2_6
   tags:
       - level1
@@ -294,6 +283,8 @@
       line: '\1"{{ fixsudo.stdout_lines[0] }}"'
       backrefs: true
   when:
+      - "'sudo' in ansible_facts.packages"
+      - debian9cis_rule_6_2_6
       - fixsudo.stdout_lines[0]
   tags:
       - level1

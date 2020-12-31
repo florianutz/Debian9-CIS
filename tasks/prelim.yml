@@ -25,6 +25,10 @@
   changed_when: false
   check_mode: false
 
+- name: "PRELIM | Gather package facts"
+  package_facts:
+    manager: auto
+
 - name: "PRELIM | Run apt cache update"
   apt:
     update_cache: true
