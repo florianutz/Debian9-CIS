@@ -1,14 +1,18 @@
 ---
 - name: "SCORED | 3.1.1 | PATCH | Ensure IP forwarding is disabled"
   sysctl:
-      name: net.ipv4.ip_forward
-      value: 0
+      name: '{{ item.name }}'
+      value: '{{ item.value }}'
       state: present
       reload: true
       ignoreerrors: true
+  with_items:
+      - { name: net.ipv4.ip_forward, value: 0 }
+      - { name: net.ipv6.conf.all.forwarding, value: 0 }
   when: not debian9cis_is_router
   notify:
       - sysctl flush ipv4 route table
+      - sysctl flush ipv6 route table
   tags:
       - level1
       - scored
@@ -48,8 +52,11 @@
   with_items:
       - { name: net.ipv4.conf.all.accept_source_route, value: 0 }
       - { name: net.ipv4.conf.default.accept_source_route, value: 0 }
+      - { name: net.ipv6.conf.all.accept_source_route, value: 0 }
+      - { name: net.ipv6.conf.default.accept_source_route, value: 0 }
   notify:
       - sysctl flush ipv4 route table
+      - sysctl flush ipv6 route table
   tags:
       - level1
       - scored
@@ -68,8 +75,11 @@
   with_items:
       - { name: net.ipv4.conf.all.accept_redirects, value: 0 }
       - { name: net.ipv4.conf.default.accept_redirects, value: 0 }
+      - { name: net.ipv6.conf.all.accept_redirects, value: 0 }
+      - { name: net.ipv6.conf.default.accept_redirects, value: 0 }
   notify:
       - sysctl flush ipv4 route table
+      - sysctl flush ipv6 route table
   tags:
       - level1
       - scored
